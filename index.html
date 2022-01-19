@@ -64,6 +64,76 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-地址泄露+栈迁移" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/01/19/%E5%9C%B0%E5%9D%80%E6%B3%84%E9%9C%B2+%E6%A0%88%E8%BF%81%E7%A7%BB/" class="article-date">
+  <time datetime="2022-01-19T13:30:00.358Z" itemprop="datePublished">2022-01-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="2022年的第一次pwn小高潮"><a href="#2022年的第一次pwn小高潮" class="headerlink" title="2022年的第一次pwn小高潮"></a>2022年的第一次pwn小高潮</h1><h2 id="eg（32位）："><a href="#eg（32位）：" class="headerlink" title="eg（32位）："></a>eg（32位）：</h2><p><img src="https://s2.loli.net/2022/01/19/465uvWmFDHsZkCI.png" alt="图片.png"></p>
+<p><img src="https://s2.loli.net/2022/01/19/HGukUBC87gatoOz.png" alt="图片.png"></p>
+<p><img src="https://s2.loli.net/2022/01/19/178v6q9YAlUT5cR.png" alt="图片.png"></p>
+<p>此题没有后门函数</p>
+<p>第一次通过read函数读取内容，并且读取长度很长，有可能存在溢出</p>
+<p>第二次通过read函数读取0x20的长度到24字节的buf中，溢出长度不够</p>
+<p><img src="https://s2.loli.net/2022/01/19/NBUehVYHMSp2Da8.png" alt="图片.png"></p>
+<p><img src="https://s2.loli.net/2022/01/19/cn7xuJoUS3rmlE4.png" alt="图片.png"></p>
+<p>s处于bss段，并且bss段具有可执行权限</p>
+<p>所以我们可以使用栈迁移getshell</p>
+<h2 id="地址泄露"><a href="#地址泄露" class="headerlink" title="地址泄露"></a>地址泄露</h2><ul>
+<li>运行程序获得一个函数的地址</li>
+<li>通过这个函数的地址可以知道相应的libc</li>
+<li>知道libc之后可以根据已知的函数得到libc的基址</li>
+<li>有了基址后就可以知道system函数的地址及参数binsh</li>
+</ul>
+<p>在初步掌握地址泄露之前，脑子里简直是一团乱麻。总的来说，今天get到了两个方法。</p>
+<h3 id="Libcsearcher"><a href="#Libcsearcher" class="headerlink" title="Libcsearcher"></a>Libcsearcher</h3><p>此题中有write函数，我们可以通过write函数来打印write函数或__libc_start_main函数的地址来得到相应的libc</p>
+<p><img src="https://s2.loli.net/2022/01/19/c79BLpNVu2sohUk.png" alt="图片.png"></p>
+<p>p32(1)+p32(wretr_got)+p32(4)是write函数的三个参数，4因为是32位程序</p>
+<p>在write函数和他的参数中间有个main函数，是为了让程序泄露write函数地址后重新执行程序获得shell</p>
+<p>为什么第一个参数是1？为什么main函数要放在中间？</p>
+<p>明天再管（现在是2022年1月19日晚9点16分）</p>
+<p>然后我们便可以知道相应的地址</p>
+<p><img src="https://s2.loli.net/2022/01/19/wEjJ5VbzKnZBWHS.png" alt="图片.png"></p>
+<h3 id="ldd"><a href="#ldd" class="headerlink" title="ldd"></a>ldd</h3><p>先使用ldd filename查看libc的路径</p>
+<p><img src="https://s2.loli.net/2022/01/19/xM1J2pDekRTPGQH.png" alt="图片.png"></p>
+<p>用法和Libcsearcher差不多，[]和()要分清</p>
+<h2 id="栈迁移"><a href="#栈迁移" class="headerlink" title="栈迁移"></a>栈迁移</h2><p>主要使用leave;ret的命令</p>
+<p>相当于mov esp,ebp    pop ebp</p>
+<p>pop eip</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yichen115/p/12450517.html">https://www.cnblogs.com/yichen115/p/12450517.html</a></p>
+<p><img src="https://s2.loli.net/2022/01/19/efs1NzOxYcQlW2V.png" alt="图片.png"></p>
+<p>有必要在草稿值上画一画栈的变化……明天再管</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大方向上较为顺利，小方面有点小卡</p>
+<p><img src="https://s2.loli.net/2022/01/19/Er6UomS1WKRB4dN.png" alt="图片.png"></p>
+<p>向前走了一小步</p>
+<p>心中迈出一大步</p>
+<p>tomorrow尝试自己独立解同类型的题</p>
+<h2 id="值得注意的小问题"><a href="#值得注意的小问题" class="headerlink" title="值得注意的小问题"></a>值得注意的小问题</h2><h3 id="一"><a href="#一" class="headerlink" title="一"></a>一</h3><p>在进行栈迁移的时候尝试使用sendline发送payload，但是总是不行</p>
+<p>后来思考了一番</p>
+<p>发现当覆盖buf时使用了0x18,允许读取0x20,进行栈迁移刚好使用0x20</p>
+<p>而sendline会在末尾发送\n导致读取失败</p>
+<h3 id="二"><a href="#二" class="headerlink" title="二"></a>二</h3><p>覆盖buf值进行栈迁移时，只能覆盖到buf为止，因为后续需要pop ebx（明天浅画一下8）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/19/%E5%9C%B0%E5%9D%80%E6%B3%84%E9%9C%B2+%E6%A0%88%E8%BF%81%E7%A7%BB/" data-id="ckyllp2cm0000rmjx4awt840p" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-wiki栈溢出" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2022/01/18/wiki%E6%A0%88%E6%BA%A2%E5%87%BA/" class="article-date">
@@ -514,6 +584,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/01/19/%E5%9C%B0%E5%9D%80%E6%B3%84%E9%9C%B2+%E6%A0%88%E8%BF%81%E7%A7%BB/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2022/01/18/wiki%E6%A0%88%E6%BA%A2%E5%87%BA/">(no title)</a>
