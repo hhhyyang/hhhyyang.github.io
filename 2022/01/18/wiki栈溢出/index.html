@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="wiki栈溢出覆盖程序返回地址为攻击者所控制的地址，需要确保此地址所在的段具有可执行权限 程序必须向栈上写入数据 写入的数据大小没有被良好的控制  常见的危险函数：输入：  gets       直接读取一行，忽略换行  scanf  vscanf   输出：  sprintf  字符串：  strcpy        复制，遇到换行停止 strcat          拼接，遇到换行停止 bco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2022/01/18/wiki%E6%A0%88%E6%BA%A2%E5%87%BA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="wiki栈溢出覆盖程序返回地址为攻击者所控制的地址，需要确保此地址所在的段具有可执行权限 程序必须向栈上写入数据 写入的数据大小没有被良好的控制  常见的危险函数：输入：  gets       直接读取一行，忽略换行  scanf  vscanf   输出：  sprintf  字符串：  strcpy        复制，遇到换行停止 strcat          拼接，遇到换行停止 bco">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-18T08:10:46.507Z">
+<meta property="article:modified_time" content="2022-01-18T11:08:23.516Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-wiki栈溢出" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/01/18/wiki%E6%A0%88%E6%BA%A2%E5%87%BA/" class="article-date">
+  <time datetime="2022-01-18T08:10:46.507Z" itemprop="datePublished">2022-01-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="wiki栈溢出"><a href="#wiki栈溢出" class="headerlink" title="wiki栈溢出"></a>wiki栈溢出</h1><h2 id="覆盖程序返回地址为攻击者所控制的地址，需要确保此地址所在的段具有可执行权限"><a href="#覆盖程序返回地址为攻击者所控制的地址，需要确保此地址所在的段具有可执行权限" class="headerlink" title="覆盖程序返回地址为攻击者所控制的地址，需要确保此地址所在的段具有可执行权限"></a>覆盖程序返回地址为攻击者所控制的地址，需要确保此地址所在的段具有可执行权限</h2><ul>
+<li>程序必须向栈上写入数据</li>
+<li>写入的数据大小没有被良好的控制</li>
+</ul>
+<h2 id="常见的危险函数："><a href="#常见的危险函数：" class="headerlink" title="常见的危险函数："></a>常见的危险函数：</h2><p>输入：</p>
+<ul>
+<li><p>gets       直接读取一行，忽略换行</p>
+</li>
+<li><p>scanf</p>
+</li>
+<li><p>vscanf</p>
+</li>
+</ul>
+<p>输出：</p>
+<ul>
+<li>sprintf</li>
+</ul>
+<p>字符串：</p>
+<ul>
+<li>strcpy        复制，遇到换行停止</li>
+<li>strcat          拼接，遇到换行停止</li>
+<li>bcopy</li>
+</ul>
+<h2 id="覆盖需求"><a href="#覆盖需求" class="headerlink" title="覆盖需求"></a>覆盖需求</h2><ul>
+<li>覆盖函数返回地址</li>
+<li>覆盖栈上某个变量内容</li>
+<li>覆盖bss段某个变量内容</li>
+<li>覆盖特定变量或地址内容</li>
+</ul>
+<h2 id="基本ROP"><a href="#基本ROP" class="headerlink" title="基本ROP"></a>基本ROP</h2><p><strong>NX保护开启，数据所在内存页标识不可执行，当程序溢出成功转入shellcode，会尝试在数据页面上执行指令。</strong></p>
+<p>在栈缓冲区溢出的基础上，利用程序中已有的小片段（gadgets）来改变某些寄存器或者变量的值，从而控制程序的执行流程。</p>
+<p>利用集中的ret指令改变执行流顺序。</p>
+<p>在32位程序中利用execve（‘’/bin/sh‘’，NULL，NULL）来获取shell时</p>
+<ul>
+<li>eax=0xb</li>
+<li>ebx指向/bin/sh的地址</li>
+<li>ecx=0</li>
+<li>edx=0</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/18/wiki%E6%A0%88%E6%BA%A2%E5%87%BA/" data-id="ckyl73k100000cnjx9ku87pt7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/12/19/readbook1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">readbook1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/18/wiki%E6%A0%88%E6%BA%A2%E5%87%BA/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/19/readbook1/">readbook1</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
