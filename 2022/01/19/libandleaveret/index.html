@@ -10,7 +10,7 @@
   <meta name="description" content="2022年的第一次pwn小高潮eg（32位）：   此题没有后门函数 第一次通过read函数读取内容，并且读取长度很长，有可能存在溢出 第二次通过read函数读取0x20的长度到24字节的buf中，溢出长度不够   s处于bss段，并且bss段具有可执行权限 所以我们可以使用栈迁移getshell 地址泄露 运行程序获得一个函数的地址 通过这个函数的地址可以知道相应的libc 知道libc之后可以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/2022/01/19/%E5%9C%B0%E5%9D%80%E6%B3%84%E9%9C%B2+%E6%A0%88%E8%BF%81%E7%A7%BB/index.html">
+<meta property="og:url" content="http://example.com/2022/01/19/libandleaveret/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="2022年的第一次pwn小高潮eg（32位）：   此题没有后门函数 第一次通过read函数读取内容，并且读取长度很长，有可能存在溢出 第二次通过read函数读取0x20的长度到24字节的buf中，溢出长度不够   s处于bss段，并且bss段具有可执行权限 所以我们可以使用栈迁移getshell 地址泄露 运行程序获得一个函数的地址 通过这个函数的地址可以知道相应的libc 知道libc之后可以">
 <meta property="og:locale" content="en_US">
@@ -77,9 +77,9 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-地址泄露+栈迁移" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-libandleaveret" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2022/01/19/%E5%9C%B0%E5%9D%80%E6%B3%84%E9%9C%B2+%E6%A0%88%E8%BF%81%E7%A7%BB/" class="article-date">
+    <a href="/2022/01/19/libandleaveret/" class="article-date">
   <time datetime="2022-01-19T13:30:00.358Z" itemprop="datePublished">2022-01-19</time>
 </a>
     
@@ -137,7 +137,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/01/19/%E5%9C%B0%E5%9D%80%E6%B3%84%E9%9C%B2+%E6%A0%88%E8%BF%81%E7%A7%BB/" data-id="ckyllp2cm0000rmjx4awt840p" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/01/19/libandleaveret/" data-id="ckyme4s8l0000hzjxfiqf18v1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -147,7 +147,7 @@
 <nav id="article-nav">
   
   
-    <a href="/2022/01/18/wiki%E6%A0%88%E6%BA%A2%E5%87%BA/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/01/18/wikistackoverflow/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title"></div>
     </a>
@@ -186,11 +186,11 @@
       <ul>
         
           <li>
-            <a href="/2022/01/19/%E5%9C%B0%E5%9D%80%E6%B3%84%E9%9C%B2+%E6%A0%88%E8%BF%81%E7%A7%BB/">(no title)</a>
+            <a href="/2022/01/19/libandleaveret/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2022/01/18/wiki%E6%A0%88%E6%BA%A2%E5%87%BA/">(no title)</a>
+            <a href="/2022/01/18/wikistackoverflow/">(no title)</a>
           </li>
         
           <li>
