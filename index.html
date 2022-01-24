@@ -64,6 +64,56 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Integer Overflow " class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/01/24/Integer%20Overflow%20/" class="article-date">
+  <time datetime="2022-01-24T05:55:29.913Z" itemprop="datePublished">2022-01-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/01/24/Integer%20Overflow%20/">Integer Overflow</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="整数溢出"><a href="#整数溢出" class="headerlink" title="整数溢出"></a>整数溢出</h1><h2 id="上界溢出"><a href="#上界溢出" class="headerlink" title="上界溢出"></a>上界溢出</h2><p>short int            2bite               0～32767（0～0x7fff）</p>
+<p>​                                                   -32768～1（    0x8000～0xffff）</p>
+<p>int8:-128~127s</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 伪代码</span><br><span class="line">short int a;</span><br><span class="line"></span><br><span class="line">a = a + 1;</span><br><span class="line"># 对应的汇编</span><br><span class="line">movzx  eax, word ptr [rbp - 0x1c]</span><br><span class="line">add    eax, 1</span><br><span class="line">mov    word ptr [rbp - 0x1c], ax</span><br><span class="line"></span><br><span class="line">unsigned short int b;</span><br><span class="line"></span><br><span class="line">b = b + 1;</span><br><span class="line"># assembly code</span><br><span class="line">add    word ptr [rbp - 0x1a], 1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="0x7fff-1"><a href="#0x7fff-1" class="headerlink" title="0x7fff+1"></a>0x7fff+1</h3><p>add 0x7fff,1 ==0x8000</p>
+<p>无符号整型：无影响</p>
+<p>有符号短整型：0x7fff=32767,0x8000=-32768</p>
+<h3 id="0xffff-1"><a href="#0xffff-1" class="headerlink" title="0xffff+1"></a>0xffff+1</h3><p>无符号短整型：0xffff=65535</p>
+<p>有符号短整型：0xffff=-1</p>
+<h2 id="下界溢出"><a href="#下界溢出" class="headerlink" title="下界溢出"></a>下界溢出</h2><h3 id="sub-0x0000-1-0xffff"><a href="#sub-0x0000-1-0xffff" class="headerlink" title="sub 0x0000,1 ==0xffff"></a>sub 0x0000,1 ==0xffff</h3><p>有符号：0-1=-1</p>
+<p>无符号：0-1=65535</p>
+<h3 id="sub-0x8000-1-0x7fff"><a href="#sub-0x8000-1-0x7fff" class="headerlink" title="sub 0x8000,1 ==0x7fff"></a>sub 0x8000,1 ==0x7fff</h3><p> 有符号：-32768-1=32767</p>
+<p>无符号：32768-1=32767</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/24/Integer%20Overflow%20/" data-id="ckyskfqp50000ghjxc4pz100k" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-pwnnotes" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2022/01/20/pwnnotes/" class="article-date">
@@ -94,6 +144,14 @@
 <p><strong>单词拼写</strong></p>
 <p><strong>栈对齐问题</strong></p>
 <p><strong>不同类型程序在相似地方的处理</strong></p>
+<p>刚刚做了一个非常easy的题，但是一开始并没有成功，因为</p>
+<p><strong>我把binsh的长度当作了binsh的地址！！！（细节决定成败）</strong></p>
+<p>格式化字符串之偏移量</p>
+<ul>
+<li>gdb</li>
+<li>执行程序输入%x%x……(%p)</li>
+<li>其他工具（unknow）</li>
+</ul>
 
       
     </div>
@@ -249,6 +307,20 @@
 <li>ecx=0</li>
 <li>edx=0</li>
 </ul>
+<h2 id="中级ROP"><a href="#中级ROP" class="headerlink" title="中级ROP"></a>中级ROP</h2><p>64位程序中，函数的前六个参数通过寄存器传递</p>
+<p>rdi rsi rdx rcx r8 r9</p>
+<p>可以利用x64下的__libc_csu_init中的gadgets</p>
+<h3 id="BROP"><a href="#BROP" class="headerlink" title="BROP"></a>BROP</h3><ul>
+<li>判断栈溢出长度（暴力枚举）</li>
+<li>Stack Reading（获取栈上的数据来泄露canaries、ebp和返回地址）</li>
+<li>Blind ROP（找到足够多的gadgets来控制输出函数的参数，并且对其进行调用）</li>
+<li>Build the exploit（利用输出函数来dump出程序以便找到更多的gadgets）</li>
+</ul>
+<p>最朴素的执行write函数的方法就是构造系统调用(基本不行[syscall])</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~~~</span><br><span class="line">pop rdi; ret  # socket</span><br><span class="line">pop rsi; ret  # buffer</span><br><span class="line">pop rdx; ret  # length</span><br><span class="line">pop rax; ret  # write syscall number</span><br><span class="line">syscall</span><br></pre></td></tr></table></figure>
+
+<p>……</p>
+<h2 id="高级ROP"><a href="#高级ROP" class="headerlink" title="高级ROP"></a>高级ROP</h2><h3 id="ret2dlresolve"><a href="#ret2dlresolve" class="headerlink" title="ret2dlresolve"></a>ret2dlresolve</h3><p>动态连接的基本过程以及ELF文件中动态连接相关的结构</p>
 
       
     </div>
@@ -648,6 +720,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/01/24/Integer%20Overflow%20/">Integer Overflow</a>
+          </li>
         
           <li>
             <a href="/2022/01/20/pwnnotes/">pwnnotes</a>
