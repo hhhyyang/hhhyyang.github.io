@@ -15,7 +15,7 @@
 <meta property="og:description" content="https:&#x2F;&#x2F;blog.csdn.net&#x2F;zhy025907&#x2F;article&#x2F;details&#x2F;90573571 很多次做题不顺利，觉得很有必要来一篇杂记 主要是 recv相关函数使用的位置（在需要多次接收和发送数据的时候） send相关函数的使用时机（读入数据的大小（栈迁移）） 单词拼写 栈对齐问题 不同类型程序在相似地方的处理 刚刚做了一个非常easy的题，但是一开始并没有成功，因为 我把bi">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-01-20T04:27:23.360Z">
-<meta property="article:modified_time" content="2022-01-30T09:11:30.948Z">
+<meta property="article:modified_time" content="2022-02-12T04:11:08.118Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -111,8 +111,16 @@
 
 <p>普通：u64(sh.recvuntil(‘\x7f’)[-6:].ljust(8,’\x00’))</p>
 <p>pwntools自动生成shellcode：</p>
-<p><strong>context(arch=’amd64’,os=’linux’)</strong></p>
+<p><strong>#context(arch=’amd64’,os=’linux’)</strong></p>
 <p><strong>shellcode=asm(shellcraft.sh())</strong></p>
+<p>64位程序：参数从左到右：rdi rsi rdx rcx r8 r9</p>
+<p>from struct import pack(RO+tab)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fmtstr_payload(offset, writes, numbwritten=0, write_size=‘byte’)</span><br><span class="line">第一个参数表示格式化字符串的偏移</span><br><span class="line">第二个参数表示需要利用%n写入的数据，采用字典形式，我们要将printf的GOT数据改为system函数地址，就写成&#123;printfGOT:systemAddress&#125;；</span><br><span class="line">第三个参数表示已经输出的字符个数</span><br><span class="line">第四个参数表示写入方式，是按字节（byte）、按双字节（short）还是按四字节（int），对应着hhn、hn和n，默认值是byte，即按hhn写</span><br></pre></td></tr></table></figure>
+
+<p>close(1):关闭标准输出</p>
+<p>close(2)：关闭标准错误</p>
+<p>（0是标准输入，1是标准输出，2是标准错误）</p>
+<p>execv 1&gt;&amp;0:标准输出重定向到标准输入（exec）</p>
 
       
     </div>
