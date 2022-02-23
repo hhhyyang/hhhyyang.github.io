@@ -145,7 +145,7 @@
 <p><strong>栈对齐问题</strong></p>
 <p><strong>不同类型程序在相似地方的处理</strong></p>
 <p>刚刚做了一个非常easy的题，但是一开始并没有成功，因为</p>
-<p><strong>我把binsh的长度当作了binsh的地址！！！（细节决定成败）</strong></p>
+<p>我把binsh的长度当作了binsh的地址！！！（细节决定成败）</p>
 <p>格式化字符串之偏移量</p>
 <ul>
 <li>gdb（fmt+tab+address）</li>
@@ -162,13 +162,14 @@
 <p><strong>#context(arch=’amd64’,os=’linux’)</strong></p>
 <p><strong>shellcode=asm(shellcraft.sh())</strong></p>
 <p>64位程序：参数从左到右：rdi rsi rdx rcx r8 r9</p>
-<p>from struct import pack(RO+tab)</p>
+<p>from struct import pack(RO+tab……–ropchain)</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fmtstr_payload(offset, writes, numbwritten=0, write_size=‘byte’)</span><br><span class="line">第一个参数表示格式化字符串的偏移</span><br><span class="line">第二个参数表示需要利用%n写入的数据，采用字典形式，我们要将printf的GOT数据改为system函数地址，就写成&#123;printfGOT:systemAddress&#125;；</span><br><span class="line">第三个参数表示已经输出的字符个数</span><br><span class="line">第四个参数表示写入方式，是按字节（byte）、按双字节（short）还是按四字节（int），对应着hhn、hn和n，默认值是byte，即按hhn写</span><br></pre></td></tr></table></figure>
 
 <p>close(1):关闭标准输出</p>
 <p>close(2)：关闭标准错误</p>
 <p>（0是标准输入，1是标准输出，2是标准错误）</p>
 <p>execv 1&gt;&amp;0:标准输出重定向到标准输入（exec）</p>
+<p><strong>64位程序 格式化字符串 传参可能存在/x00截断</strong></p>
 
       
     </div>
