@@ -87,6 +87,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="srop"><a href="#srop" class="headerlink" title="srop"></a>srop</h1><p>利用linux下15號系統調用的-&gt;rt_sigreturn</p>
+<p>sigreturn是一個系統調用，在lei unix系統發生signal時候會被間接的調用</p>
 <p>signal是Unix系統中的一種通信機制，通常用於在進程之間傳遞信息，也可以說是軟中斷信息。常見與在一個進程中，內核向其發送軟中斷信號，該進程將暫時被掛起，系統進入內核tai（太心）。</p>
 <p>因爲暫時被掛起，系統會保留該進程的上下文</p>
 <ul>
@@ -95,6 +96,7 @@
 <p>此時：</p>
 <p><img src="https://s2.loli.net/2022/02/26/wfVJrm5nBqKEsye.png" alt="图片.png"></p>
 <p>這一段內存也被稱爲Signal Frame</p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1740251">https://cloud.tencent.com/developer/article/1740251</a></p>
 <ul>
 <li>signal frame被放置在用戶進程的內存空間中，也就是說signal frame是可以讀寫的</li>
 <li>在恢復signal信號的時候沒有檢測，也就是說可以通過改變signal frame中的信息來劫持控制流</li>
@@ -102,6 +104,30 @@
 <p>eg：最easy的srop</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rax=59          對應59號系統調用-&gt;excevc</span><br><span class="line">rdi=&#x27;/bin/sh&#x27;</span><br><span class="line">rsi=0</span><br><span class="line">rdx=0</span><br></pre></td></tr></table></figure>
 
+<p>條件：</p>
+<ul>
+<li>可以通過zhan溢出來控制zhan的內容</li>
+<li>需要找到相應的地址<ul>
+<li>/bin/sh（泄露zhan）</li>
+<li>sigreturn（若沒有該gadgets，可將rax置爲15（x64）or77（x86），然後使用syscall來調用sigreturn）</li>
+<li>syscall</li>
+<li>signal frame（使用sigreturnframe僞造）</li>
+</ul>
+</li>
+<li>足夠大的空間以便塞下整個signal frame</li>
+</ul>
+<p>過程：</p>
+<ul>
+<li>僞造signal frame結構，push到zhan中，其中需要將對應寄存器的值修改爲系統調用的相關參數<ul>
+<li>eax/rax：指向需要用到的系統調用號</li>
+<li>eip/rip：指向syscall的地址</li>
+<li>ebx/rdi：指向需要用到的字符串</li>
+<li>esp ebp和rsp rbp不可以直接設置爲0</li>
+</ul>
+</li>
+<li>將返回地址構造爲sigreturn的地址（或相關gadget）</li>
+<li>sigreturn的系統調用執行完成後，就可以執行自定義的系統調用了</li>
+</ul>
 <h1 id="srop鏈（lian）"><a href="#srop鏈（lian）" class="headerlink" title="srop鏈（lian）"></a>srop鏈（lian）</h1><p>可以利用syscall ret串聯srop鏈（執行不止一個signalframe）</p>
 <p>buu第三頁二行二列：ciscn_2019_es_7 1</p>
 <p><img src="https://s2.loli.net/2022/02/26/9PSFQ8YfAwNU3pJ.png" alt="图片.png"></p>
@@ -207,11 +233,10 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhy025907/article/details/90573571">https://blog.csdn.net/zhy025907/article/details/90573571</a></p>
-<p>很多次做题不顺利，觉得很有必要来一篇杂记</p>
+<h1 id="雜記"><a href="#雜記" class="headerlink" title="雜記"></a>雜記</h1><p>很多次做题不顺利，觉得很有必要来一篇杂记</p>
 <p>主要是</p>
 <p><strong>recv相关函数使用的位置（在需要多次接收和发送数据的时候）</strong></p>
 <p><strong>send相关函数的使用时机（读入数据的大小（栈迁移））</strong></p>
-<p><strong>单词拼写</strong></p>
 <p><strong>栈对齐问题</strong></p>
 <p><strong>不同类型程序在相似地方的处理</strong></p>
 <p>格式化字符串之偏移量</p>
@@ -238,6 +263,14 @@
 <p>（0是标准输入，1是标准输出，2是标准错误）</p>
 <p>execv 1&gt;&amp;0:标准输出重定向到标准输入（exec）</p>
 <p><strong>64位程序 格式化字符串 传参可能存在/x00截断</strong></p>
+<h1 id="rax寄存器"><a href="#rax寄存器" class="headerlink" title="rax寄存器"></a>rax寄存器</h1><p>rax寄存器的值可以通過控制某個函數的返回值來間接控制（read函數的返回值爲讀取的子jie數）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssize_t read ^[1]^ (int fd,void *buf,size_t count)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">成功返回讀取的字節數，出錯返回-1 並設置errno，如果在調read之前已經達到文件末尾，則這次read返回0.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以通過read讀取的字符數來設置rax寄存器的值，從而執行sigreturn（srop（詳見pwnnotes2））</li>
+</ul>
 
       
     </div>
