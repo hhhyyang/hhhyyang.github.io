@@ -7,12 +7,12 @@
   
   <title>qctf2018_stack2 1 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="總結：  偏移量需要調試 char類型的數組每完成一次覆寫，都只能覆寫一位 後門函數的參數&#x2F;bin&#x2F;bash沒用，使用ststem_address+任意+sh_address  斷點：       直接單步： 輸入一個數字16，繼續單步執行 直到  then">
+  <meta name="description" content="总结：  偏移量需要调试 char类型的数组每完成一次覆写，都只能覆写一位 后门函数的参数&#x2F;bin&#x2F;bash没用，使用ststem_address+任意+sh_address  断点调试：       直接单步调试： 输入一个数字16，继续单步执行 直到  然后">
 <meta property="og:type" content="article">
 <meta property="og:title" content="qctf2018_stack2 1">
 <meta property="og:url" content="http://example.com/2022/03/02/qctf2018_stack2%201/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="總結：  偏移量需要調試 char類型的數組每完成一次覆寫，都只能覆寫一位 後門函數的參數&#x2F;bin&#x2F;bash沒用，使用ststem_address+任意+sh_address  斷點：       直接單步： 輸入一個數字16，繼續單步執行 直到  then">
+<meta property="og:description" content="总结：  偏移量需要调试 char类型的数组每完成一次覆写，都只能覆写一位 后门函数的参数&#x2F;bin&#x2F;bash没用，使用ststem_address+任意+sh_address  断点调试：       直接单步调试： 输入一个数字16，继续单步执行 直到  然后">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://s2.loli.net/2022/03/02/KfUoj2uTziIwP6A.png">
 <meta property="og:image" content="https://s2.loli.net/2022/03/02/9Wsq3FlJ4MobQ2i.png">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://s2.loli.net/2022/03/02/U2C3er4F6ziRVIL.png">
 <meta property="og:image" content="https://s2.loli.net/2022/03/02/oXF4J8PQtphD6SE.png">
 <meta property="article:published_time" content="2022-03-02T04:21:59.824Z">
-<meta property="article:modified_time" content="2022-03-02T05:05:30.372Z">
+<meta property="article:modified_time" content="2022-03-09T08:28:50.548Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://s2.loli.net/2022/03/02/KfUoj2uTziIwP6A.png">
@@ -108,24 +108,24 @@
 <p><img src="https://s2.loli.net/2022/03/02/SmzvbA3pWn5KGXx.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/UNHvsIPZ38CgETo.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/38dU67vyI94fOGt.png" alt="图片.png"></p>
-<p><strong>總結：</strong></p>
+<p><strong>总结：</strong></p>
 <ul>
-<li>偏移量需要調試</li>
-<li>char類型的數組每完成一次覆寫，都只能覆寫一位</li>
-<li>後門函數的參數/bin/bash沒用，使用ststem_address+任意+sh_address</li>
+<li>偏移量需要调试</li>
+<li>char类型的数组每完成一次覆写，都只能覆写一位</li>
+<li>后门函数的参数/bin/bash没用，使用ststem_address+任意+sh_address</li>
 </ul>
-<p><strong>斷點：</strong></p>
+<p><strong>断点调试：</strong></p>
 <p><img src="https://s2.loli.net/2022/03/02/uWUDr8esoTapkCG.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/vb1oMGLxiwmN3CA.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/W95J7KUANQiyFtG.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/ReYZw89k2ClzbKx.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/FsBHNf5CmIMU8qh.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/7y4hOZDdREVCaTi.png" alt="图片.png"></p>
-<p><strong>直接單步：</strong></p>
-<p>輸入一個數字16，繼續單步執行</p>
+<p><strong>直接单步调试：</strong></p>
+<p>输入一个数字16，继续单步执行</p>
 <p>直到</p>
 <p><img src="https://s2.loli.net/2022/03/02/cInjgGARp9TbP1U.png" alt="图片.png"></p>
-<p>then</p>
+<p>然后</p>
 <p><img src="https://s2.loli.net/2022/03/02/U2C3er4F6ziRVIL.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/oXF4J8PQtphD6SE.png" alt="图片.png"></p>
 
@@ -141,11 +141,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2022/03/06/%E4%B8%80%E4%BA%9B%E7%B6%B2%E5%9D%80/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2022/03/06/%E4%B8%80%E4%BA%9B%E7%BD%91%E5%9D%80/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          一些網址
+          一些网址
         
       </div>
     </a>
@@ -190,7 +190,11 @@
       <ul>
         
           <li>
-            <a href="/2022/03/06/%E4%B8%80%E4%BA%9B%E7%B6%B2%E5%9D%80/">一些網址</a>
+            <a href="/2022/03/09/SomethingInteresting/">SomethingInteresting</a>
+          </li>
+        
+          <li>
+            <a href="/2022/03/06/%E4%B8%80%E4%BA%9B%E7%BD%91%E5%9D%80/">一些网址</a>
           </li>
         
           <li>
@@ -203,10 +207,6 @@
         
           <li>
             <a href="/2022/01/24/Integer%20Overflow%20/">Integer Overflow</a>
-          </li>
-        
-          <li>
-            <a href="/2022/01/20/pwnnotes/">pwnnotes</a>
           </li>
         
       </ul>

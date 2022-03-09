@@ -64,9 +64,101 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-一些網址" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-SomethingInteresting" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2022/03/06/%E4%B8%80%E4%BA%9B%E7%B6%B2%E5%9D%80/" class="article-date">
+    <a href="/2022/03/09/SomethingInteresting/" class="article-date">
+  <time datetime="2022-03-09T06:47:41.824Z" itemprop="datePublished">2022-03-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/09/SomethingInteresting/">SomethingInteresting</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="修改ubuntu用戶名"><a href="#修改ubuntu用戶名" class="headerlink" title="修改ubuntu用戶名"></a>修改ubuntu用戶名</h1><h2 id="修改前的准备："><a href="#修改前的准备：" class="headerlink" title="修改前的准备："></a>修改前的准备：</h2><h3 id="vim编辑器："><a href="#vim编辑器：" class="headerlink" title="vim编辑器："></a>vim编辑器：</h3><ul>
+<li>执行vim filename进入编辑器（默认命令模式）</li>
+<li>点击a或i进入编辑模式，输入内容</li>
+<li>输入完成后使用Esc退出编辑模式（进入命令模式）</li>
+<li>输入：__wq+回车__（w保存并q退出）</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/09/gITqYGfOpMj534b.png" alt="图片.png"></p>
+<h2 id="1-更改主机名字"><a href="#1-更改主机名字" class="headerlink" title="1-更改主机名字"></a>1-更改主机名字</h2><h3 id="修改hostname文件："><a href="#修改hostname文件：" class="headerlink" title="修改hostname文件："></a>修改hostname文件：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/hostname</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/03/09/mv2kosBpAqlt8ra.png" alt="图片.png"></p>
+<p>修改LittleGreen为想要更改的主机名</p>
+<p>此文件中的内容用于显示主机的名字，修改后如果重启，终端中@后面的主机名将会改变</p>
+<h3 id="修改hosts文件："><a href="#修改hosts文件：" class="headerlink" title="修改hosts文件："></a>修改hosts文件：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/03/09/x9oEvz4wKWnYJCH.png" alt="图片.png"></p>
+<p>将LittleGreen修改为想要更改的名称</p>
+<p>更改完成后，建议重启计算机，否则命令执行会较慢</p>
+<h2 id="2-更改用户名"><a href="#2-更改用户名" class="headerlink" title="2-更改用户名"></a>2-更改用户名</h2><h3 id="修改sudoer文件："><a href="#修改sudoer文件：" class="headerlink" title="修改sudoer文件："></a>修改sudoer文件：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/sudoers</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/03/09/oDGfBm8sVgeSkHO.png" alt="图片.png"></p>
+<p>在红框内另外__添加__想要更改的用户名,格式与前两个相同</p>
+<h3 id="修改shadow文件："><a href="#修改shadow文件：" class="headerlink" title="修改shadow文件："></a>修改shadow文件：</h3><p>此文件中存储与登录相关的内容，格式如下：</p>
+<p>username: passwd: lastchg: min: max: warn: inactive: expire: flag</p>
+<p>登录名：加密口令：最后一次修改时间：最小时间间隔：最大时间间隔：警告时间：不活动时间：失效时间：标志</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/shadow</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/03/09/U1KzX3yPlFoufGa.png" alt="图片.png"></p>
+<p>将红框内自己原来的用户名修改为欲修改的名字</p>
+<h3 id="修改开始目录："><a href="#修改开始目录：" class="headerlink" title="修改开始目录："></a>修改开始目录：</h3><p><img src="https://s2.loli.net/2022/03/09/FZMKiSY43JwbQqa.png" alt="图片.png"></p>
+<h3 id="修改passwd文件："><a href="#修改passwd文件：" class="headerlink" title="修改passwd文件："></a>修改passwd文件：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p>passwd文件内容格式如下：</p>
+<p><img src="https://s2.loli.net/2022/03/09/UT9oBVnRSLzAqYW.png" alt="图片.png"></p>
+<p>用户名：密码：uid：gid：用户描述：主目录：登录shell</p>
+<p>将用户名、用户描述、主目录修改为新的名字</p>
+<h3 id="修改原用户下文件所属的组："><a href="#修改原用户下文件所属的组：" class="headerlink" title="修改原用户下文件所属的组："></a>修改原用户下文件所属的组：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/group</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/03/09/MEQJhDitAXnR1SO.png" alt="图片.png"></p>
+<p>将红框内的用户名修改为欲修改的名字</p>
+<h3 id="再次进入sudoer文件，删除原来的用户名"><a href="#再次进入sudoer文件，删除原来的用户名" class="headerlink" title="再次进入sudoer文件，删除原来的用户名"></a>再次进入sudoer文件，删除原来的用户名</h3><h2 id="可能遇见的问题："><a href="#可能遇见的问题：" class="headerlink" title="可能遇见的问题："></a>可能遇见的问题：</h2><h3 id="1-出现如下界面："><a href="#1-出现如下界面：" class="headerlink" title="1-出现如下界面："></a>1-出现如下界面：</h3><p><img src="https://s2.loli.net/2022/03/09/vHtyP9wKXojpSCd.png" alt="图片.png"></p>
+<p>有文件未关闭</p>
+<p>解决方法：</p>
+<p>按‘e’+回车</p>
+<h3 id="2-E45-‘readonly’-option-is-set-add-to-override"><a href="#2-E45-‘readonly’-option-is-set-add-to-override" class="headerlink" title="2-E45: ‘readonly’ option is set (add ! to override)"></a>2-E45: ‘readonly’ option is set (add ! to override)</h3><p>当前用户没有权限对文件进行修改</p>
+<p>解决方法：</p>
+<p>输入__:w !sudo tee %__</p>
+<ul>
+<li>:w—-write</li>
+<li>!sudo—-call shell sudo command</li>
+<li>tee—-the output of write(:w)command is redirected using tee</li>
+<li>%—-current file name</li>
+</ul>
+<h2 id="参考网址"><a href="#参考网址" class="headerlink" title="参考网址"></a>参考网址</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zeusmyth/p/6231350.html">https://www.cnblogs.com/zeusmyth/p/6231350.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cheng_feng_xiao_zhan/article/details/53391474">https://blog.csdn.net/cheng_feng_xiao_zhan/article/details/53391474</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/haimishasha/p/7629935.html">https://www.cnblogs.com/haimishasha/p/7629935.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zengmingen/article/details/50802555">https://blog.csdn.net/zengmingen/article/details/50802555</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/09/SomethingInteresting/" data-id="cl0jawr3g0000biwebz570eqq" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-一些网址" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/03/06/%E4%B8%80%E4%BA%9B%E7%BD%91%E5%9D%80/" class="article-date">
   <time datetime="2022-03-06T07:34:34.597Z" itemprop="datePublished">2022-03-06</time>
 </a>
     
@@ -78,7 +170,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2022/03/06/%E4%B8%80%E4%BA%9B%E7%B6%B2%E5%9D%80/">一些網址</a>
+      <a class="article-title" href="/2022/03/06/%E4%B8%80%E4%BA%9B%E7%BD%91%E5%9D%80/">一些网址</a>
     </h1>
   
 
@@ -92,7 +184,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/03/06/%E4%B8%80%E4%BA%9B%E7%B6%B2%E5%9D%80/" data-id="cl0eypfxh00006djxhw0t0vr3" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/03/06/%E4%B8%80%E4%BA%9B%E7%BD%91%E5%9D%80/" data-id="cl0jawr3r0001biwe5zy19f21" class="article-share-link">Share</a>
       
       
     </footer>
@@ -129,24 +221,24 @@
 <p><img src="https://s2.loli.net/2022/03/02/SmzvbA3pWn5KGXx.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/UNHvsIPZ38CgETo.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/38dU67vyI94fOGt.png" alt="图片.png"></p>
-<p><strong>總結：</strong></p>
+<p><strong>总结：</strong></p>
 <ul>
-<li>偏移量需要調試</li>
-<li>char類型的數組每完成一次覆寫，都只能覆寫一位</li>
-<li>後門函數的參數/bin/bash沒用，使用ststem_address+任意+sh_address</li>
+<li>偏移量需要调试</li>
+<li>char类型的数组每完成一次覆写，都只能覆写一位</li>
+<li>后门函数的参数/bin/bash没用，使用ststem_address+任意+sh_address</li>
 </ul>
-<p><strong>斷點：</strong></p>
+<p><strong>断点调试：</strong></p>
 <p><img src="https://s2.loli.net/2022/03/02/uWUDr8esoTapkCG.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/vb1oMGLxiwmN3CA.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/W95J7KUANQiyFtG.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/ReYZw89k2ClzbKx.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/FsBHNf5CmIMU8qh.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/7y4hOZDdREVCaTi.png" alt="图片.png"></p>
-<p><strong>直接單步：</strong></p>
-<p>輸入一個數字16，繼續單步執行</p>
+<p><strong>直接单步调试：</strong></p>
+<p>输入一个数字16，继续单步执行</p>
 <p>直到</p>
 <p><img src="https://s2.loli.net/2022/03/02/cInjgGARp9TbP1U.png" alt="图片.png"></p>
-<p>then</p>
+<p>然后</p>
 <p><img src="https://s2.loli.net/2022/03/02/U2C3er4F6ziRVIL.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/03/02/oXF4J8PQtphD6SE.png" alt="图片.png"></p>
 
@@ -185,61 +277,61 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="srop"><a href="#srop" class="headerlink" title="srop"></a>srop</h1><p>利用linux下15號系統調用的-&gt;rt_sigreturn</p>
-<p>sigreturn是一個系統調用，在lei unix系統發生signal時候會被間接的調用</p>
-<p>signal是Unix系統中的一種通信機制，通常用於在進程之間傳遞信息，也可以說是軟中斷信息。常見與在一個進程中，內核向其發送軟中斷信號，該進程將暫時被掛起，系統進入內核tai（太心）。</p>
-<p>因爲暫時被掛起，系統會保留該進程的上下文</p>
+        <h1 id="srop"><a href="#srop" class="headerlink" title="srop"></a>srop</h1><p>利用linux下15号系统调用的-&gt;rt_sigreturn</p>
+<p>sigreturn是一个系统调用，在类unix系统发生signal时候会被间接的调用</p>
+<p>signal是Unix系统中的一种通信机制，通常用于在进程之间传递信息，也可以说是软中断信息。常见于在一个进程中，內核向其发送軟软中断信号，该进程将暂时被挂起，系统进入内核态。</p>
+<p>因为暂时被挂起，系统会保留该进程的上下文</p>
 <ul>
-<li>將所有的寄存器以及signal信息和__指向sigreturn的系統調用地址（在zhan頂上放置rt_sigreturn）__ya入zhan中。</li>
+<li>将所有的寄存器以及signal信息和__指向sigreturn的系统调用地址（在栈顶上放置rt_sigreturn）__压入栈中。</li>
 </ul>
-<p>此時：</p>
+<p>此时：</p>
 <p><img src="https://s2.loli.net/2022/02/26/wfVJrm5nBqKEsye.png" alt="图片.png"></p>
-<p>這一段內存也被稱爲Signal Frame</p>
+<p>这一段内存也被称为Signal Frame</p>
 <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1740251">https://cloud.tencent.com/developer/article/1740251</a></p>
 <ul>
-<li>signal frame被放置在用戶進程的內存空間中，也就是說signal frame是可以讀寫的</li>
-<li>在恢復signal信號的時候沒有檢測，也就是說可以通過改變signal frame中的信息來劫持控制流</li>
+<li>signal frame被放置在用户进程的内存空间中，也就是说signal frame是可以读写的</li>
+<li>在恢復signal信号的时候没有检测，也就是说可以通过改变signal frame中的信息来劫持控制流</li>
 </ul>
 <p>eg：最easy的srop</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rax=59          對應59號系統調用-&gt;excevc</span><br><span class="line">rdi=&#x27;/bin/sh&#x27;</span><br><span class="line">rsi=0</span><br><span class="line">rdx=0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rax=59          59号系统调用-&gt;excevc</span><br><span class="line">rdi=&#x27;/bin/sh&#x27;</span><br><span class="line">rsi=0</span><br><span class="line">rdx=0</span><br></pre></td></tr></table></figure>
 
-<p>條件：</p>
+<p>条件：</p>
 <ul>
-<li>可以通過zhan溢出來控制zhan的內容</li>
-<li>需要找到相應的地址<ul>
-<li>/bin/sh（泄露zhan）</li>
-<li>sigreturn（若沒有該gadgets，可將rax置爲15（x64）or77（x86），然後使用syscall來調用sigreturn）</li>
+<li>可以通过栈溢出來控制栈的内容</li>
+<li>需要找到相应的地址<ul>
+<li>/bin/sh（泄露栈）</li>
+<li>sigreturn（若没有该gadgets，可将rax置为15（x64）or77（x86），然后使用syscall来调用sigreturn）</li>
 <li>syscall</li>
-<li>signal frame（使用sigreturnframe僞造）</li>
+<li>signal frame（使用sigreturnframe伪造）</li>
 </ul>
 </li>
-<li>足夠大的空間以便塞下整個signal frame</li>
+<li>足够大的空间以便塞下整个signal frame</li>
 </ul>
-<p>過程：</p>
+<p>过程：</p>
 <ul>
-<li>僞造signal frame結構，push到zhan中，其中需要將對應寄存器的值修改爲系統調用的相關參數<ul>
-<li>eax/rax：指向需要用到的系統調用號</li>
+<li>伪造signal frame结构，push到栈中，其中需要将对应寄存器的值修改为系统调用的相关参数<ul>
+<li>eax/rax：指向需要用到的系统调用号</li>
 <li>eip/rip：指向syscall的地址</li>
 <li>ebx/rdi：指向需要用到的字符串</li>
-<li>esp ebp和rsp rbp不可以直接設置爲0</li>
+<li>esp ebp和rsp rbp不可以直接设置为0</li>
 </ul>
 </li>
-<li>將返回地址構造爲sigreturn的地址（或相關gadget）</li>
-<li>sigreturn的系統調用執行完成後，就可以執行自定義的系統調用了</li>
+<li>将返回地址构造为sigreturn的地址（或相关gadget）</li>
+<li>sigreturn的系统调用执行完成后，就可以执行自定义的系统调用了</li>
 </ul>
-<h1 id="srop鏈（lian）"><a href="#srop鏈（lian）" class="headerlink" title="srop鏈（lian）"></a>srop鏈（lian）</h1><p>可以利用syscall ret串聯srop鏈（執行不止一個signalframe）</p>
+<h1 id="srop链"><a href="#srop链" class="headerlink" title="srop链"></a>srop链</h1><p>可以利用syscall ret串联srop链（执行不止一个signalframe）</p>
 <p>buu第三頁二行二列：ciscn_2019_es_7 1</p>
 <p><img src="https://s2.loli.net/2022/02/26/9PSFQ8YfAwNU3pJ.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/02/26/3b4o5Om6MUpq9zR.png" alt="图片.png"></p>
 <p><img src="https://s2.loli.net/2022/02/26/y97rvgGFxjCVTaK.png" alt="图片.png"></p>
-<p>匯編：</p>
+<p>汇编：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">read(0,buf,0x400)</span><br><span class="line">write(0,buf,0x30)</span><br></pre></td></tr></table></figure>
 
-<p>syscall（系統調用）是根據rax寄存器li的值，來決定進行多少號的系統調用</p>
-<p>在x64系統中，15號系統調用對應rt_sigreturn</p>
+<p>syscall（系统调用）是根据rax寄存器里的值，来决定进行多少号的系统调用</p>
+<p>在x64系统中，15号系统调用对应rt_sigreturn</p>
 <ul>
 <li>用write leak出/bin/sh的地址</li>
-<li>讓系統進入signal</li>
+<li>让系统进入signal</li>
 <li>劫持signal frame</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">frame=SigreturnFrame()#pwntools集成的工具</span><br><span class="line">frame.rax=constants.SYS_execve</span><br><span class="line">frame.rdi=sh_address</span><br><span class="line">frame.rsi=0</span><br><span class="line">frame.rdx=0</span><br><span class="line">frame.rip=syscall_ret</span><br></pre></td></tr></table></figure>
@@ -332,7 +424,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhy025907/article/details/90573571">https://blog.csdn.net/zhy025907/article/details/90573571</a></p>
-<h1 id="雜記"><a href="#雜記" class="headerlink" title="雜記"></a>雜記</h1><p>很多次做题不顺利，觉得很有必要来一篇杂记</p>
+<h1 id="杂记"><a href="#杂记" class="headerlink" title="杂记"></a>杂记</h1><p>很多次做题不顺利，觉得很有必要来一篇杂记</p>
 <p>主要是</p>
 <p><strong>recv相关函数使用的位置（在需要多次接收和发送数据的时候）</strong></p>
 <p><strong>send相关函数的使用时机（读入数据的大小（栈迁移））</strong></p>
@@ -362,19 +454,18 @@
 <p>（0是标准输入，1是标准输出，2是标准错误）</p>
 <p>execv 1&gt;&amp;0:标准输出重定向到标准输入（exec）</p>
 <p><strong>64位程序 格式化字符串 传参可能存在/x00截断</strong></p>
-<h1 id="rax寄存器"><a href="#rax寄存器" class="headerlink" title="rax寄存器"></a>rax寄存器</h1><p>rax寄存器的值可以通過控制某個函數的返回值來間接控制（read函數的返回值爲讀取的子jie數）</p>
+<h1 id="rax寄存器"><a href="#rax寄存器" class="headerlink" title="rax寄存器"></a>rax寄存器</h1><p>rax寄存器的值可以通过控制某个函数的返回值来间接控制（read函數的返回值为读取的字节数）</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssize_t read ^[1]^ (int fd,void *buf,size_t count)</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">成功返回讀取的字節數，出錯返回-1 並設置errno，如果在調read之前已經達到文件末尾，則這次read返回0.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">成功返回读取的字节数，出错返回-1 并设置errno，如果在调用read之前已经达到文件末尾，则这次read返回0.</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>可以通過read讀取的字符數來設置rax寄存器的值，從而執行sigreturn（srop（詳見pwnnotes2））</li>
+<li>可以通过read读取的字符数來设置rax寄存器的值，从而执行sigreturn（srop（详见pwnnotes2））</li>
 </ul>
-<h1 id="格式化字符串漏洞-多次寫入"><a href="#格式化字符串漏洞-多次寫入" class="headerlink" title="格式化字符串漏洞 多次寫入"></a>格式化字符串漏洞 多次寫入</h1><p>當relro保護爲no relro時，init.array&amp;&amp;fini.array&amp;&amp;got.plt均可讀可寫</p>
-<p>爲partial relro時，init.array&amp;&amp;fini.array可讀不可寫，got.plt可讀可寫</p>
-<p>爲full relro時，均可讀不可寫</p>
-<p>程序在加載時，會依次調用init.array數組中的每一個函數指針，在結束的時候依次調用fini.array中的每一個函數指針</p>
-<p><strong>當程序出現格式化字符串漏洞，但是需要寫兩次才能完成攻擊，這時候可以考慮改寫fini.array中的函數指針爲main函數的地址，可以再執行一次main函數。一般來說，這個數組的長度爲1,也就是只能寫一個地址</strong></p>
+<h1 id="格式化字符串漏洞-多次写入"><a href="#格式化字符串漏洞-多次写入" class="headerlink" title="格式化字符串漏洞 多次写入"></a>格式化字符串漏洞 多次写入</h1><p>当relro保护为no relro时，init.array&amp;&amp;fini.array&amp;&amp;got.plt均可读可写</p>
+<p>当partial relro时，init.array&amp;&amp;fini.array可读不可写，got.plt可读可写</p>
+<p>为full relro时，均可读不可写</p>
+<p>程序在加载时，会依次调用init.array数组中的每一个函数指针，在结束的时候依次调用fini.array中的每一个函数指针__当程序出现格式化字符串漏洞，但是需要写两次才能完成攻击，这时候可以考虑改写fini.array中的函数指针写main函数的地址，可以再执行一次main函数。一般來说，这个数组的长度为1,也就是只能写一个地址__</p>
 
       
     </div>
@@ -945,7 +1036,11 @@
       <ul>
         
           <li>
-            <a href="/2022/03/06/%E4%B8%80%E4%BA%9B%E7%B6%B2%E5%9D%80/">一些網址</a>
+            <a href="/2022/03/09/SomethingInteresting/">SomethingInteresting</a>
+          </li>
+        
+          <li>
+            <a href="/2022/03/06/%E4%B8%80%E4%BA%9B%E7%BD%91%E5%9D%80/">一些网址</a>
           </li>
         
           <li>
@@ -958,10 +1053,6 @@
         
           <li>
             <a href="/2022/01/24/Integer%20Overflow%20/">Integer Overflow</a>
-          </li>
-        
-          <li>
-            <a href="/2022/01/20/pwnnotes/">pwnnotes</a>
           </li>
         
       </ul>
